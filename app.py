@@ -20,8 +20,11 @@ def api_call():
         loaded_model = None
         with open('./models/'+clf, 'rb') as f:
             loaded_model = pickle.load(f)
-        policy_pred = loaded_model.predict(input_data)
+        policy_pred = pd.DataFrame(loaded_model.predict(input_data))
         responses = jsonify(predictions=policy_pred.to_json(orient="records"))
         responses.status_code = 200
 
         return responses
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
